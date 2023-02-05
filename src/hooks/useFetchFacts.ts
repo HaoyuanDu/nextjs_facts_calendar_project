@@ -26,7 +26,15 @@ const useFetchFacts = () => {
   const getFact = (date: string) => {
     setLoading(true);
 
-    fetch(`${BASE_URL}${date}/date`)
+    fetch(`${BASE_URL}${date}/date`, {
+      mode: "cors",
+      headers: {
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Origin": "http://numbersapi.com",
+
+        // 'Content-Type': 'application/x-www-form-urlencoded',
+      },
+    })
       .then((res) => res.text())
       .then(
         (data) => {
