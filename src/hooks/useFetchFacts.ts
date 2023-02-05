@@ -30,7 +30,7 @@ const useFetchFacts = () => {
       mode: "cors",
       headers: {
         "Content-Type": "application/json",
-        "Access-Control-Allow-Origin": "http://numbersapi.com",
+        "Access-Control-Allow-Origin": `${BASE_URL}${date}/date`,
 
         // 'Content-Type': 'application/x-www-form-urlencoded',
       },
