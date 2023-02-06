@@ -5,7 +5,20 @@ export type ErrorProps = {
   errorMessage: string;
   errorType?: string;
 };
-
+const months = [
+  "January",
+  "February",
+  "March",
+  "April",
+  "May",
+  "June",
+  "July",
+  "August",
+  "September",
+  "October",
+  "November",
+  "December",
+];
 const useFetchFacts = () => {
   const [data, setData] = useState("");
   const [factDate, setFactDate] = useState("");
@@ -28,11 +41,7 @@ const useFetchFacts = () => {
 
     fetch(`${BASE_URL}${date}/date`, {
       mode: "cors",
-      headers: {
-        // "Content-Type": "application/json",
-        // "Access-Control-Allow-Origin": `${BASE_URL}${date}/date`,
-        // 'Content-Type': 'application/x-www-form-urlencoded',
-      },
+      headers: {},
     })
       .then((res) => res.text())
       .then(
@@ -61,6 +70,13 @@ const useFetchFacts = () => {
   };
 
   const addFavorite = () => {
+    if (!data) {
+      setErrors({
+        errorType: "duplicateError",
+        errorMessage: "Please Serach for facts first",
+      });
+      return;
+    }
     if (dataBase.has(factDate)) {
       const facts = dataBase.get(factDate);
       for (let i of facts!) {
@@ -70,7 +86,6 @@ const useFetchFacts = () => {
             errorMessage: "This fact already exist in the list",
           });
           // setError("This fact already exist in the list");
-          console.log("it already there");
           return;
         }
       }
@@ -81,6 +96,33 @@ const useFetchFacts = () => {
     }
     setFavoriteList(new Map(dataBase));
   };
+
+  const convertDayandMonth = (monthitem: string, day: string) => {
+    let date = months.indexOf(monthitem) + 1 + "/" + day.match(/\d/g);
+    return date;
+  };
+
+  const removeFavorite = (item: string) => {
+    const splitedArray = item.split(" ");
+    let monnth = splitedArray[0];
+    let day = splitedArray[1];
+    let date = convertDayandMonth(monnth, day);
+
+    const facts = dataBase.get(date);
+
+    let index = facts!.indexOf(item);
+
+    if (index > -1 && facts!.length > 0) {
+      facts!.splice(index, 1);
+      dataBase.set(date, facts!);
+      setFavoriteList(new Map(dataBase));
+
+      return;
+    }
+
+    dataBase.delete(factDate);
+    setFavoriteList(new Map(dataBase));
+  };
   return {
     data,
     isLoading,
@@ -88,6 +130,7 @@ const useFetchFacts = () => {
     setDate,
     onSubmit,
     addFavorite,
+    removeFavorite,
     favoriteList,
     errors,
   };

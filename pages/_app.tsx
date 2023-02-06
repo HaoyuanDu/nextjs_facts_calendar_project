@@ -14,6 +14,7 @@ const App = () => {
     setDate,
     onSubmit,
     addFavorite,
+    removeFavorite,
     favoriteList,
     errors,
   } = useFetchFacts();
@@ -92,7 +93,10 @@ const App = () => {
             </h1>
             <div className="inline-flex items-baseline justify-center md:max-w-[1000px] md:px-5 lg:p-6 h-6 lg:h-[350px] bg-white bg-opacity-20 backdrop-blur-ls rounded drop-shadow-lg text-zinc-700 mt-5 overflow-scroll">
               <div>
-                <FavoriteList favoriteList={favoriteList} />
+                <FavoriteList
+                  favoriteList={favoriteList}
+                  removeFavorite={removeFavorite}
+                />
               </div>
             </div>
           </section>
