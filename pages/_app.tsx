@@ -19,9 +19,9 @@ const App = () => {
     errors,
   } = useFetchFacts();
 
-  const [startDate, setStartDate] = useState(new Date());
+  const [startDate, setStartDate] = useState<Date>(new Date());
   useEffect(() => {
-    setDate(startDate?.getMonth() + 1 + "/" + startDate.getDate());
+    setDate(startDate.getMonth() + 1 + "/" + startDate.getDate());
     onSubmit();
   }, [startDate]);
 
