@@ -33,6 +33,7 @@ const useFetchFacts = () => {
   }, [dataBase]);
 
   const onSubmit = () => {
+    console.log("factDate", factDate);
     if (!factDate) return;
     getFact(factDate);
   };
@@ -66,10 +67,12 @@ const useFetchFacts = () => {
   };
 
   const setDate = (date: string) => {
+    console.log("date", date);
     setFactDate(date);
   };
 
   const addFavorite = () => {
+    console.log("data", data);
     if (!data) {
       setErrors({
         errorType: "duplicateError",
