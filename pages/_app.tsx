@@ -51,11 +51,11 @@ const App = () => {
               Search
             </button>
             <label className="label">
-              <span className="text-sm text-red-600 mt-4">
+              {/* <span className="text-sm text-red-600 mt-4">
                 {errors && errors.errorType == "fetchError"
                   ? errors.errorMessage
                   : ""}
-              </span>
+              </span> */}
             </label>
             <SearchResult
               addFavorite={addFavorite}
@@ -70,6 +70,8 @@ const App = () => {
               <FavoriteList
                 favoriteList={favoriteList}
                 removeFavorite={removeFavorite}
+                errors={errors}
+                data={data}
               />
             </div>
           </section>

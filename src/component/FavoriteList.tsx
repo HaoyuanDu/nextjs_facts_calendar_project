@@ -1,13 +1,16 @@
+import { ErrorProps } from "../hooks/useFetchFacts";
+
 type Props = {
   favoriteList: Map<string, string[]>;
   removeFavorite: (item: string) => void;
+  errors?: ErrorProps | null;
+  data: string;
 };
 
 const convertMapToArray = (props: any) => {
   let favoriteList: Map<string, string[]> = props.favoriteList;
 
   let reworkedList: string[] = [];
-
   favoriteList.forEach((value: string[], key: string) => {
     reworkedList = reworkedList.concat(value);
   });

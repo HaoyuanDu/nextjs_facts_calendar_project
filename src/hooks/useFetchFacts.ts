@@ -97,11 +97,12 @@ const useFetchFacts = () => {
     } else {
       dataBase.set(factDate, [data]);
     }
+    getFact(factDate);
     setFavoriteList(new Map(dataBase));
   };
 
   const convertDayandMonth = (monthitem: string, day: string) => {
-    let date = months.indexOf(monthitem) + 1 + "/" + day.match(/\d/g);
+    let date = months.indexOf(monthitem) + 1 + "/" + day.match(/\d*\d/);
     return date;
   };
 
@@ -113,19 +114,19 @@ const useFetchFacts = () => {
 
     const facts = dataBase.get(date);
 
-    let index = facts!.indexOf(item);
-
-    if (index > -1 && facts!.length > 0) {
-      facts!.splice(index, 1);
-      dataBase.set(date, facts!);
+    let index;
+    if (facts) {
+      index = facts.indexOf(item);
+      if (index > -1 && facts!.length > 0) {
+        facts!.splice(index, 1);
+        dataBase.set(date, facts!);
+      } else {
+        dataBase.delete(factDate);
+      }
       setFavoriteList(new Map(dataBase));
-
-      return;
     }
-
-    dataBase.delete(factDate);
-    setFavoriteList(new Map(dataBase));
   };
+
   return {
     data,
     isLoading,
